@@ -13,8 +13,7 @@ public interface StudentService {
 
     List<Student> getAllStudentSortedByName();
 
-    default void emptyArrayList() {
-    }
+    default void emptyArrayList() {}
 
     //Do not implement these methods in StudentServiceImplArraylist.java class
     default void updateStudent(Student student) {}
