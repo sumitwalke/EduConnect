@@ -2,7 +2,6 @@ package com.wecp.progressive.dao;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.wecp.progressive.entity.Teacher;
 
 public class TeacherDAOImpl implements TeacherDAO{
@@ -31,7 +30,4 @@ public class TeacherDAOImpl implements TeacherDAO{
     public List<Teacher> getAllTeachers() {
         return new ArrayList<>();
     }
-
-
-
 }

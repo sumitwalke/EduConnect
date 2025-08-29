@@ -2,7 +2,7 @@ package com.wecp.progressive.entity;
 
 import java.util.Date;
 
-public class Student {
+public class Student implements Comparable<Student>{
     private int studentId;
     private String fullName;
     private Date dateOfBirth;
@@ -71,6 +71,8 @@ public class Student {
         this.address = address;
     }
 
-    
-
+    @Override
+    public int compareTo(Student o) {
+        return this.fullName.compareTo(o.getFullName());
+    }
 }

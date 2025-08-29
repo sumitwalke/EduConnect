@@ -31,5 +31,4 @@ public class StudentDAOImpl implements StudentDAO{
     public List<Student> getAllStudents() {
         return new ArrayList<>();
     }
-    
 }
