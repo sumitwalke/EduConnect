@@ -17,27 +17,53 @@ public class CourseServiceImplJdbc  implements CourseService{
 
     @Override
     public List<Course> getAllCourses() {
-        return new ArrayList<>();
+        List<Course> courses = new ArrayList<>();
+        try {
+            courses = courseDAO.getAllCourses();
+        } catch (Exception e) {
+            System.out.println("Failed to gell all the courses "+e.getMessage());
+        }
+        return courses;
     }
 
     @Override
     public Course getCourseById(int courseId) {
-        return null;
+        Course course = null;
+        try {
+            course = courseDAO.getCourseById(courseId);
+        } catch (Exception e) {
+            System.out.println("Failed to gell the course by ID "+e.getMessage());
+        }
+        return course;
     }
 
     @Override
     public Integer addCourse(Course course) {
-        return -1;
+        Integer courseId = null;
+        try {
+            courseId = courseDAO.addCourse(course);
+        } catch (Exception e) {
+            System.out.println("Failed to add the course "+e.getMessage());
+        }
+        return courseId;
     }
 
     @Override
     public void updateCourse(Course course) {
-        
+        try {
+            courseDAO.updateCourse(course);
+        } catch (Exception e) {
+            System.out.println("Failed to update course "+e.getMessage());
+        }
     }
 
     @Override
     public void deleteCourse(int courseId) {
-    
+        try {
+            courseDAO.deleteCourse(courseId);
+        } catch (Exception e) {
+            System.out.println("Failed to delete course "+e.getMessage());
+        }
     }
 
 }
