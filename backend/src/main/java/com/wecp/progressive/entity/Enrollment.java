@@ -1,5 +1,7 @@
 package com.wecp.progressive.entity;
 
-public class Enrollment {
+import javax.persistence.Entity;
 
+public class Enrollment {
+    
 }
