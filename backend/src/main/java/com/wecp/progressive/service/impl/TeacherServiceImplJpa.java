@@ -1,12 +1,15 @@
 package com.wecp.progressive.service.impl;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import org.springframework.stereotype.Service;
 
 import com.wecp.progressive.entity.Teacher;
 import com.wecp.progressive.repository.TeacherRepository;
 import com.wecp.progressive.service.TeacherService;
 
+@Service
 public class TeacherServiceImplJpa implements TeacherService {
 
     TeacherRepository teacherRepository;
@@ -16,18 +19,47 @@ public class TeacherServiceImplJpa implements TeacherService {
     }
 
     @Override
-    public List<Teacher> getAllTeachers() {
-        return new ArrayList<>();
+    public List<Teacher> getAllTeachers() throws Exception{
+        return teacherRepository.findAll();
     }
 
     @Override
-    public Integer addTeacher(Teacher teacher) {
-        return -1;
+    public Integer addTeacher(Teacher teacher) throws Exception{
+        Teacher newTeacher = teacherRepository.save(teacher);
+        return newTeacher.getTeacherId();
     }
 
     @Override
-    public List<Teacher> getTeacherSortedByExperience() {
-        return new ArrayList<>();
+    public List<Teacher> getTeacherSortedByExperience() throws Exception{
+        List<Teacher> sortedtTeacher = teacherRepository.findAll();
+        Collections.sort(sortedtTeacher);
+        return sortedtTeacher;
+    }
+
+    @Override
+    public void updateTeacher(Teacher teacher)  throws Exception { 
+        Teacher updatedTeacher = teacherRepository.findById(teacher.getTeacherId()).orElse(null);
+        if(updatedTeacher != null){
+            updatedTeacher.setFullName(teacher.getFullName());
+            updatedTeacher.setEmail(teacher.getEmail());
+            updatedTeacher.setContactNumber(teacher.getContactNumber());
+            updatedTeacher.setSubject(teacher.getSubject());
+            updatedTeacher.setYearsOfExperience(teacher.getYearsOfExperience());
+            teacherRepository.save(updatedTeacher);
+        }
+    }
+
+    @Override
+    public void deleteTeacher(int teacherId)  throws Exception { 
+        Teacher deletedTeacher = teacherRepository.findById(teacherId).orElse(null);
+        if(deletedTeacher != null){
+            teacherRepository.delete(deletedTeacher);
+        }
+    }
+
+    @Override
+    public Teacher getTeacherById(int teacherId)  throws Exception { 
+        return teacherRepository.findById(teacherId).orElse(null); 
     }
 
 }

@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.List;
 
 import com.wecp.progressive.dao.TeacherDAO;
-import com.wecp.progressive.entity.Student;
 import com.wecp.progressive.entity.Teacher;
 import com.wecp.progressive.service.TeacherService;
 

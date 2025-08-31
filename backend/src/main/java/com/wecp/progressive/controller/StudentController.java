@@ -28,12 +28,6 @@ public class StudentController {
     @Autowired
     private StudentServiceImplArraylist studentServiceArrayList;
 
-    public StudentController(StudentServiceImplJpa studentServiceJPA,
-            StudentServiceImplArraylist studentServiceArrayList) {
-        this.studentServiceJPA = studentServiceJPA;
-        this.studentServiceArrayList = studentServiceArrayList;
-    }
-
     @GetMapping
     public ResponseEntity<List<Student>> getAllStudents() {
        try {
@@ -74,17 +68,17 @@ public class StudentController {
         try {
             student.setStudentId(studentId);
             studentServiceJPA.updateStudent(student);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @DeleteMapping("/{studentId}")
-    public ResponseEntity<Void> deleteStudent(int studentId) {
+    public ResponseEntity<Void> deleteStudent(@PathVariable int studentId) {
         try {
             studentServiceJPA.deleteStudent(studentId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
