@@ -18,7 +18,7 @@ public class TeacherDAOImpl implements TeacherDAO{
     public TeacherDAOImpl() {
         try {
             connection = DatabaseConnectionManager.getConnection();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Failed to initialize the Database" + e.getMessage());
         }
     }
@@ -42,8 +42,8 @@ public class TeacherDAOImpl implements TeacherDAO{
                     return teacher.getTeacherId();
                 }
             }
-        } catch (Exception e) {
-            System.out.println("Failed to insert the data in the Teacher table " + e.getMessage());
+        } catch (SQLException e) {
+            throw new SQLException("Failed to insert the data in the Teacher table " + e.getMessage());
         }
         return -1;
     }
@@ -58,8 +58,8 @@ public class TeacherDAOImpl implements TeacherDAO{
             if (rs.next()) {
                 teacher = new Teacher(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6));
             }
-        } catch (Exception e) {
-            System.out.println("Failed to get teacher by id from the Teacher table " + e.getMessage());
+        } catch (SQLException e) {
+            throw new SQLException("Failed to get teacher by id from the Teacher table " + e.getMessage());
         }
         return teacher;
     }
@@ -75,8 +75,8 @@ public class TeacherDAOImpl implements TeacherDAO{
             ps.setInt(5, teacher.getYearsOfExperience());
             ps.setInt(6, teacher.getTeacherId());
             ps.executeUpdate();
-        } catch (Exception e) {
-            System.out.println("Failed to update the data in the Teacher table " + e.getMessage());
+        } catch (SQLException e) {
+            throw new SQLException("Failed to update the data in the Teacher table " + e.getMessage());
         }
     }
 
@@ -86,8 +86,8 @@ public class TeacherDAOImpl implements TeacherDAO{
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setInt(1, teacherId);
             ps.executeUpdate();
-        } catch (Exception e) {
-            System.out.println("Failed to delete the data from the Teacher table " + e.getMessage());
+        } catch (SQLException e) {
+            throw new SQLException("Failed to delete the data from the Teacher table " + e.getMessage());
         }
     }
 
@@ -100,8 +100,8 @@ public class TeacherDAOImpl implements TeacherDAO{
             while(rs.next()) {
                 teachers.add(new Teacher(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6)));
             }
-        } catch (Exception e) {
-            System.out.println("Failed to get all the teachers from the Teacher table " + e.getMessage());
+        } catch (SQLException e) {
+            throw new SQLException("Failed to get all the teachers from the Teacher table " + e.getMessage());
         }
         return teachers;
     }

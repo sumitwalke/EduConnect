@@ -18,7 +18,7 @@ public class CourseDAOImpl implements CourseDAO {
     public CourseDAOImpl() {
         try {
             connection = DatabaseConnectionManager.getConnection();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Failed to initialize the Database" + e.getMessage());
         }
     }
@@ -40,8 +40,8 @@ public class CourseDAOImpl implements CourseDAO {
                     return course.getCourseId();
                 }
             }
-        } catch (Exception e) {
-            System.out.println("Failed to insert the data in the Course table " + e.getMessage());
+        } catch (SQLException e) {
+            throw new SQLException("Failed to insert the data in the Course table " + e.getMessage());
         }
         return -1;
     }
@@ -56,8 +56,8 @@ public class CourseDAOImpl implements CourseDAO {
             if (rs.next()) {
                 course = new Course(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4));
             }
-        } catch (Exception e) {
-            System.out.println("Failed to get course by id from the Course table " + e.getMessage());
+        } catch (SQLException e) {
+            throw new SQLException("Failed to get course by id from the Course table " + e.getMessage());
         }
         return course;
     }
@@ -71,8 +71,8 @@ public class CourseDAOImpl implements CourseDAO {
             ps.setInt(3, course.getTeacherId());
             ps.setInt(4, course.getCourseId());
             ps.executeUpdate();
-        } catch (Exception e) {
-            System.out.println("Failed to update the data in the Course table " + e.getMessage());
+        } catch (SQLException e) {
+            throw new SQLException("Failed to update the data in the Course table " + e.getMessage());
         }
     }
 
@@ -82,8 +82,8 @@ public class CourseDAOImpl implements CourseDAO {
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setInt(1, courseId);
             ps.executeUpdate();
-        } catch (Exception e) {
-            System.out.println("Failed to delete the data in from Course table " + e.getMessage());
+        } catch (SQLException e) {
+            throw new SQLException("Failed to delete the data in from Course table " + e.getMessage());
         }
     }
 
@@ -96,8 +96,8 @@ public class CourseDAOImpl implements CourseDAO {
             while(rs.next()) {
                 courses.add(new Course(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4)));
             }
-        } catch (Exception e) {
-            System.out.println("Failed to get all the courses from the Course table " + e.getMessage());
+        } catch (SQLException e) {
+            throw new SQLException("Failed to get all the courses from the Course table " + e.getMessage());
         }
         return courses;
     }

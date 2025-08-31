@@ -1,5 +1,6 @@
 package com.wecp.progressive.service.impl;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,67 +14,67 @@ public class TeacherServiceImplJdbc implements TeacherService {
 
     private TeacherDAO teacherDAO;
 
-    public TeacherServiceImplJdbc(TeacherDAO teacherDAO) {
+    public TeacherServiceImplJdbc(TeacherDAO teacherDAO)  {
         this.teacherDAO = teacherDAO;
     }
 
     @Override
-    public List<Teacher> getAllTeachers() {
+    public List<Teacher> getAllTeachers() throws SQLException {
         List<Teacher> teachers = new ArrayList<>();
         try {
             teachers = teacherDAO.getAllTeachers();
-        } catch (Exception e) {
-            System.out.println("Failed to get all teachers "+e.getMessage());
+        } catch (SQLException e) {
+            throw new SQLException("Failed to get all teachers "+e.getMessage());
         }
         return teachers;
     }
 
     @Override
-    public Integer addTeacher(Teacher teacher) {
+    public Integer addTeacher(Teacher teacher) throws SQLException {
         Integer teacherId = null;
         try {
             teacherId = teacherDAO.addTeacher(teacher);
-        } catch (Exception e) {
-            System.out.println("Failed to add teachers "+e.getMessage());
+        } catch (SQLException e) {
+            throw new SQLException("Failed to add teachers "+e.getMessage());
         }
         return teacherId;
     }
 
     @Override
-    public List<Teacher> getTeacherSortedByExperience() {
+    public List<Teacher> getTeacherSortedByExperience() throws SQLException {
         List<Teacher> sortedTeachers = new ArrayList<>();
         try {
             sortedTeachers = teacherDAO.getAllTeachers();
             Collections.sort(sortedTeachers);
 
-        } catch (Exception e) {
-            System.out.println("Failed to get all teachers sorted by experience"+e.getMessage());
+        } catch (SQLException e) {
+            throw new SQLException("Failed to get all teachers sorted by experience"+e.getMessage());
         }
         return sortedTeachers;
     }
 
-    public void updateTeacher(Teacher teacher) {
+    public void updateTeacher(Teacher teacher) throws SQLException {
         try {
             teacherDAO.updateTeacher(teacher);
-        } catch (Exception e) {
-            System.out.println("Failed to update teachers "+e.getMessage());
+        } catch (SQLException e) {
+            throw new SQLException("Failed to update teachers "+e.getMessage());
         }
     }
 
-    public void deleteTeacher(int teacherId) {
+    public void deleteTeacher(int teacherId) throws SQLException {
         try {
             teacherDAO.deleteTeacher(teacherId);
-        } catch (Exception e) {
-            System.out.println("Failed to delete teachers "+e.getMessage());
+        } catch (SQLException e) {
+            throw new SQLException("Failed to delete teachers "+e.getMessage());
         }
     }
 
-    public Teacher getTeacherById(int teacherId) {
+    public Teacher getTeacherById(int teacherId) throws SQLException {
         Teacher teacher = null;
         try {
             teacher = teacherDAO.getTeacherById(teacherId);
-        } catch (Exception e) {
-            System.out.println("Failed to get teachers by ID "+e.getMessage());
+        } catch (SQLException e) {
+            throw new SQLException("Failed to get teachers by ID "+e.getMessage());
         }
         return teacher;
     }

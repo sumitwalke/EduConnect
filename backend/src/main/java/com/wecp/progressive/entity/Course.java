@@ -1,6 +1,5 @@
 package com.wecp.progressive.entity;
 
-import javax.annotation.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,7 +21,7 @@ public class Course {
 
     @Column(name = "description")
     private String description;
-    
+
     @Column(name = "teacher_id")
     private int teacherId;
 

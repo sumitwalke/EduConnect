@@ -1,7 +1,6 @@
 package com.wecp.progressive.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,7 +18,7 @@ public class StudentDAOImpl implements StudentDAO{
     public StudentDAOImpl() {
         try {
             connection = DatabaseConnectionManager.getConnection();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Failed to initialize the Database" + e.getMessage());
         }
     }
@@ -43,8 +42,8 @@ public class StudentDAOImpl implements StudentDAO{
                     return student.getStudentId();
                 }
             }
-        } catch (Exception e) {
-            System.out.println("Failed to insert the data in the Student table " + e.getMessage());
+        } catch (SQLException e) {
+            throw new SQLException("Failed to insert the data in the Student table " + e.getMessage());
         }
         return -1;
     }
@@ -59,8 +58,8 @@ public class StudentDAOImpl implements StudentDAO{
             if (rs.next()) {
                 student = new Student(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getString(4), rs.getString(5), rs.getString(6));
             }
-        } catch (Exception e) {
-            System.out.println("Failed to get student by id from the Student table " + e.getMessage());
+        } catch (SQLException e) {
+            throw new SQLException("Failed to get student by id from the Student table " + e.getMessage());
         }
         return student;
     }
@@ -76,8 +75,8 @@ public class StudentDAOImpl implements StudentDAO{
             ps.setString(5, student.getAddress());
             ps.setInt(6, student.getStudentId());
             ps.executeUpdate();
-        } catch (Exception e) {
-            System.out.println("Failed to update the data in the Student table " + e.getMessage());
+        } catch (SQLException e) {
+            throw new SQLException("Failed to update the data in the Student table " + e.getMessage());
         }
     }
 
@@ -87,8 +86,8 @@ public class StudentDAOImpl implements StudentDAO{
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setInt(1, studentId);
             ps.executeUpdate();
-        } catch (Exception e) {
-            System.out.println("Failed to delete the data from the Student table " + e.getMessage());
+        } catch (SQLException e) {
+            throw new SQLException("Failed to delete the data from the Student table " + e.getMessage());
         }
     }
 
@@ -101,8 +100,8 @@ public class StudentDAOImpl implements StudentDAO{
             while(rs.next()) {
                 students.add(new Student(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getString(4), rs.getString(5), rs.getString(6)));
             }
-        } catch (Exception e) {
-            System.out.println("Failed to get all the students from the Student table " + e.getMessage());
+        } catch (SQLException e) {
+            throw new SQLException("Failed to get all the students from the Student table " + e.getMessage());
         }
         return students;
     }
