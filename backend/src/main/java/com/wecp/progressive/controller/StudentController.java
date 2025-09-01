@@ -95,7 +95,7 @@ public class StudentController {
     }
 
     @PostMapping("/toArrayList")
-    public ResponseEntity<Integer> addStudentToArrayList(Student student) {
+    public ResponseEntity<Integer> addStudentToArrayList(@RequestBody Student student) {
         int studentsListSize = studentServiceArrayList.addStudent(student);
         return new ResponseEntity<>(studentsListSize, HttpStatus.CREATED);
     }

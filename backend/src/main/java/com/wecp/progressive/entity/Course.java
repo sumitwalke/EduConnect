@@ -1,10 +1,13 @@
 package com.wecp.progressive.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -25,7 +28,20 @@ public class Course {
     @Column(name = "teacher_id")
     private int teacherId;
 
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "teacher_id")
+    Teacher teacher;
+
+
     public Course() {
+    }
+
+    public Course(int courseId, String courseName, String description, int teacherId, Teacher teacher) {
+        this.courseId = courseId;
+        this.courseName = courseName;
+        this.description = description;
+        this.teacherId = teacherId;
+        this.teacher = teacher;
     }
 
     public Course(int courseId, String courseName, String description, int teacherId) {
