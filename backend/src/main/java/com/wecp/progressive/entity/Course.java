@@ -51,6 +51,12 @@ public class Course {
         this.teacherId = teacherId;
     }
 
+    public Course(int courseId, Teacher teacher, String courseName) {
+        this.courseId = courseId;
+        this.courseName = courseName;
+        this.teacher = teacher;
+    }
+
     public int getCourseId() {
         return courseId;
     }
@@ -81,6 +87,14 @@ public class Course {
 
     public void setTeacherId(int teacherId) {
         this.teacherId = teacherId;
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 
 }

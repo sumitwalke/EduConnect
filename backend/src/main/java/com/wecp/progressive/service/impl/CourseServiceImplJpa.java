@@ -1,21 +1,25 @@
 package com.wecp.progressive.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.wecp.progressive.entity.Course;
+import com.wecp.progressive.entity.Teacher;
 import com.wecp.progressive.repository.CourseRepository;
+import com.wecp.progressive.repository.TeacherRepository;
 import com.wecp.progressive.service.CourseService;
 
 @Service
 public class CourseServiceImplJpa implements CourseService {
 
+    @Autowired
     CourseRepository courseRepository;
 
-    public CourseServiceImplJpa(CourseRepository courseRepository){
-        this.courseRepository = courseRepository;
-    }
+    @Autowired
+    TeacherRepository teacherRepository;
 
     @Override
     public List<Course> getAllCourses() throws Exception{
@@ -52,6 +56,14 @@ public class CourseServiceImplJpa implements CourseService {
         }
     }
 
-
-    
+    public List<Course> getAllCourseByTeacherId(int teacherId) { 
+        List<Course> courses = courseRepository.findAll();
+        List<Course> coursesByTeacher = new ArrayList<>();
+        for(Course c: courses){
+            if(c.getTeacherId() == teacherId){
+                coursesByTeacher.add(c);
+            }
+        }
+        return coursesByTeacher;
+    }
 }
