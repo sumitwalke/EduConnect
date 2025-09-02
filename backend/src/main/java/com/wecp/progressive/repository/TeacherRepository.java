@@ -6,5 +6,6 @@ import com.wecp.progressive.entity.Teacher;
 
 
 public interface TeacherRepository extends JpaRepository<Teacher, Integer>{
-    Teacher findByTeacherId(int teacherId);
+    public Teacher findByTeacherId(int teacherId);
+    public Teacher findByEmail(String email);
 }

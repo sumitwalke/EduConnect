@@ -55,7 +55,10 @@ public class CourseController {
     public ResponseEntity<Integer> addCourse(@RequestBody Course course) {
         try {
             Integer courseId = courseService.addCourse(course);
-            return new ResponseEntity<>(courseId, HttpStatus.CREATED);
+            if(courseId != null){
+                return new ResponseEntity<>(courseId, HttpStatus.CREATED);
+            }
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -67,6 +70,8 @@ public class CourseController {
             course.setCourseId(courseId);
             courseService.updateCourse(course);
             return new ResponseEntity<>(HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

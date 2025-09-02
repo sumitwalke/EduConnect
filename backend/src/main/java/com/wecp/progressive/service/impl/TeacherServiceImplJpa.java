@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.wecp.progressive.entity.Teacher;
+import com.wecp.progressive.exception.TeacherAlreadyExistsException;
 import com.wecp.progressive.repository.TeacherRepository;
 import com.wecp.progressive.service.TeacherService;
 
@@ -14,52 +15,58 @@ public class TeacherServiceImplJpa implements TeacherService {
 
     TeacherRepository teacherRepository;
 
-    public TeacherServiceImplJpa(TeacherRepository teacherRepository){
+    public TeacherServiceImplJpa(TeacherRepository teacherRepository) {
         this.teacherRepository = teacherRepository;
     }
 
     @Override
-    public List<Teacher> getAllTeachers() throws Exception{
+    public List<Teacher> getAllTeachers() throws Exception {
         return teacherRepository.findAll();
     }
 
     @Override
-    public Integer addTeacher(Teacher teacher) throws Exception{
+    public Integer addTeacher(Teacher teacher) throws Exception {
+        List<Teacher> teachers = teacherRepository.findAll();
+        for (Teacher t : teachers) {
+            if (t.getFullName().equals(teacher.getFullName())) {
+                throw new TeacherAlreadyExistsException("Teacher already exists");
+            }
+        }
         Teacher newTeacher = teacherRepository.save(teacher);
         return newTeacher.getTeacherId();
     }
 
     @Override
-    public List<Teacher> getTeacherSortedByExperience() throws Exception{
+    public List<Teacher> getTeacherSortedByExperience() throws Exception {
         List<Teacher> sortedtTeacher = teacherRepository.findAll();
         Collections.sort(sortedtTeacher);
         return sortedtTeacher;
     }
 
     @Override
-    public void updateTeacher(Teacher teacher)  throws Exception { 
-        Teacher updatedTeacher = teacherRepository.findById(teacher.getTeacherId()).orElse(null);
-        if(updatedTeacher != null){
-            updatedTeacher.setFullName(teacher.getFullName());
-            updatedTeacher.setEmail(teacher.getEmail());
-            updatedTeacher.setContactNumber(teacher.getContactNumber());
-            updatedTeacher.setSubject(teacher.getSubject());
-            updatedTeacher.setYearsOfExperience(teacher.getYearsOfExperience());
-            teacherRepository.save(updatedTeacher);
-        }
+    public void updateTeacher(Teacher teacher) throws Exception {
+        Teacher updatedTeacher = teacherRepository.findById(teacher.getTeacherId())
+                .orElseThrow(() -> new IllegalArgumentException("Teacher does not exist"));
+                
+        updatedTeacher.setFullName(teacher.getFullName());
+        updatedTeacher.setEmail(teacher.getEmail());
+        updatedTeacher.setContactNumber(teacher.getContactNumber());
+        updatedTeacher.setSubject(teacher.getSubject());
+        updatedTeacher.setYearsOfExperience(teacher.getYearsOfExperience());
+        teacherRepository.save(updatedTeacher);
     }
 
     @Override
-    public void deleteTeacher(int teacherId)  throws Exception { 
+    public void deleteTeacher(int teacherId) throws Exception {
         Teacher deletedTeacher = teacherRepository.findById(teacherId).orElse(null);
-        if(deletedTeacher != null){
+        if (deletedTeacher != null) {
             teacherRepository.delete(deletedTeacher);
         }
     }
 
     @Override
-    public Teacher getTeacherById(int teacherId)  throws Exception { 
-        return teacherRepository.findById(teacherId).orElse(null); 
+    public Teacher getTeacherById(int teacherId) throws Exception {
+        return teacherRepository.findById(teacherId).orElse(null);
     }
 
 }

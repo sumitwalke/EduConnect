@@ -30,12 +30,12 @@ public class StudentController {
 
     @GetMapping
     public ResponseEntity<List<Student>> getAllStudents() {
-       try {
+        try {
             List<Student> students = studentServiceJPA.getAllStudents();
             return new ResponseEntity<>(students, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-       }
+        }
     }
 
     @GetMapping("/{studentId}")
@@ -56,8 +56,11 @@ public class StudentController {
     @PostMapping
     public ResponseEntity<Integer> addStudent(@RequestBody Student student) {
         try {
-                int studentId = studentServiceJPA.addStudent(student);
+            Integer studentId = studentServiceJPA.addStudent(student);
+            if (studentId != null) {
                 return new ResponseEntity<>(studentId, HttpStatus.CREATED);
+            }
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -69,6 +72,8 @@ public class StudentController {
             student.setStudentId(studentId);
             studentServiceJPA.updateStudent(student);
             return new ResponseEntity<>(HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

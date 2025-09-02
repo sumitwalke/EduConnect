@@ -51,7 +51,10 @@ public class TeacherController {
     public ResponseEntity<Integer> addTeacher(@RequestBody Teacher teacher) {
         try {
             Integer teacherId = teacherService.addTeacher(teacher);
-            return new ResponseEntity<>(teacherId, HttpStatus.CREATED);     
+            if(teacherId != null){
+                return new ResponseEntity<>(teacherId, HttpStatus.CREATED);
+            }
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);     
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -63,6 +66,8 @@ public class TeacherController {
             teacher.setTeacherId(teacherId);
             teacherService.updateTeacher(teacher);
             return new ResponseEntity<>(HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
