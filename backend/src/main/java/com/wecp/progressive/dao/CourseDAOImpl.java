@@ -29,7 +29,7 @@ public class CourseDAOImpl implements CourseDAO {
         try (PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, course.getCourseName());
             ps.setString(2, course.getDescription());
-            ps.setInt(3, course.getTeacherId());
+            // ps.setInt(3, course.getTeacherId());
 
             int affectedRows = ps.executeUpdate();
 
@@ -54,7 +54,7 @@ public class CourseDAOImpl implements CourseDAO {
             ps.setInt(1, courseId);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                course = new Course(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4));
+                // course = new Course(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4));
             }
         } catch (SQLException e) {
             throw new SQLException("Failed to get course by id from the Course table " + e.getMessage());
@@ -68,7 +68,7 @@ public class CourseDAOImpl implements CourseDAO {
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, course.getCourseName());
             ps.setString(2, course.getDescription());
-            ps.setInt(3, course.getTeacherId());
+            // ps.setInt(3, course.getTeacherId());
             ps.setInt(4, course.getCourseId());
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -94,7 +94,7 @@ public class CourseDAOImpl implements CourseDAO {
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
-                courses.add(new Course(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4)));
+                // courses.add(new Course(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4)));
             }
         } catch (SQLException e) {
             throw new SQLException("Failed to get all the courses from the Course table " + e.getMessage());

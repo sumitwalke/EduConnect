@@ -24,6 +24,10 @@ public class CourseController {
     @Autowired
     CourseServiceImplJpa courseService;
 
+    public CourseController(CourseServiceImplJpa courseService){
+        this.courseService = courseService;
+    }
+
     @GetMapping
     public ResponseEntity<List<Course>> getAllCourses() {
         try {

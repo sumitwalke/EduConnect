@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.wecp.progressive.entity.Course;
-import com.wecp.progressive.entity.Teacher;
 import com.wecp.progressive.repository.CourseRepository;
 import com.wecp.progressive.repository.TeacherRepository;
 import com.wecp.progressive.service.CourseService;
@@ -20,6 +19,20 @@ public class CourseServiceImplJpa implements CourseService {
 
     @Autowired
     TeacherRepository teacherRepository;
+
+    @Autowired
+    public CourseServiceImplJpa(TeacherRepository teacherRepository) {
+        this.teacherRepository = teacherRepository;
+    }
+
+    public CourseServiceImplJpa(CourseRepository courseRepository) {
+        this.courseRepository = courseRepository;
+    }
+
+    public CourseServiceImplJpa(CourseRepository courseRepository, TeacherRepository teacherRepository) {
+        this.courseRepository = courseRepository;
+        this.teacherRepository = teacherRepository;
+    }
 
     @Override
     public List<Course> getAllCourses() throws Exception{
@@ -43,7 +56,7 @@ public class CourseServiceImplJpa implements CourseService {
         if(updatedCourse != null){
             updatedCourse.setCourseName(course.getCourseName());
             updatedCourse.setDescription(course.getDescription());
-            updatedCourse.setTeacherId(course.getTeacherId());
+            updatedCourse.setTeacher(course.getTeacher());
             courseRepository.save(updatedCourse);
         }
     }
@@ -60,7 +73,7 @@ public class CourseServiceImplJpa implements CourseService {
         List<Course> courses = courseRepository.findAll();
         List<Course> coursesByTeacher = new ArrayList<>();
         for(Course c: courses){
-            if(c.getTeacherId() == teacherId){
+            if(c.getTeacher().getTeacherId() == teacherId){
                 coursesByTeacher.add(c);
             }
         }
