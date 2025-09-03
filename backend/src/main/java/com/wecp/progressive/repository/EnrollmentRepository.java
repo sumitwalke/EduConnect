@@ -9,15 +9,15 @@ import com.wecp.progressive.entity.Enrollment;
 
 public interface EnrollmentRepository extends JpaRepository<Enrollment, Integer>{
 
-    Optional<Enrollment> findByStudent_StudentIdAndCourse_CourseId(int studentId, int courseId);
+    // Optional<Enrollment> findByStudent_StudentIdAndCourse_CourseId(int studentId, int courseId);
 
     List<Enrollment> findAllByStudent_StudentId(int student_id);
 
-    List<Enrollment> findAllBycOURSE_CourseId(int course_id);
+    List<Enrollment> findAllByCourse_CourseId(int course_id);
 
-    void deleteByCourseId(int courseId);
+    // void deleteByCourseId(int courseId);
 
-    void deleteByStudentId(int studentId);
+    // void deleteByStudentId(int studentId);
 
-    void deleteByTeacherId(int teacherId);
+    // void deleteByTeacherId(int teacherId);
 }

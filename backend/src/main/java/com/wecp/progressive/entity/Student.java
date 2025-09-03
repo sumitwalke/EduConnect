@@ -16,7 +16,7 @@ public class Student implements Comparable<Student>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "student_id")
-    private int studentId;
+    private Integer studentId;
 
     @Column(name = "full_name")    
     private String fullName;
@@ -36,7 +36,7 @@ public class Student implements Comparable<Student>{
     public Student() {
     }
 
-    public Student(int studentId, String fullName, Date dateOfBirth, String contactNumber, String email,
+    public Student(Integer studentId, String fullName, Date dateOfBirth, String contactNumber, String email,
             String address) {
         this.studentId = studentId;
         this.fullName = fullName;
@@ -46,11 +46,11 @@ public class Student implements Comparable<Student>{
         this.address = address;
     }
 
-    public int getStudentId() {
+    public Integer getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(int studentId) {
+    public void setStudentId(Integer studentId) {
         this.studentId = studentId;
     }
 
