@@ -16,5 +16,4 @@ public interface EnrollmentService {
     public List<Enrollment> getAllEnrollmentsByStudent(int studentId);
 
     public List<Enrollment> getAllEnrollmentsByCourse(int courseId);
-
 }
