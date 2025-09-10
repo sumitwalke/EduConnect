@@ -23,13 +23,13 @@ public class AttendanceServiceImpl implements AttendanceService {
 
     @Override
     public Attendance createAttendance(Attendance attendance) throws Exception {
-        // List<Attendance> attendances = attendanceRepository.findAll();
-        // for (Attendance a : attendances) {
-        //     if (a.getStudent().equals(attendance.getStudent()) && a.getCourse().equals(attendance.getCourse())
-        //             && a.getAttendanceDate().equals(attendance.getAttendanceDate())) {
-        //         throw new AttendanceAlreadyExistsException("Attendance already marked");
-        //     }
-        // }
+        List<Attendance> attendances = attendanceRepository.findAll();
+        for (Attendance a : attendances) {
+            if (a.getStudent().equals(attendance.getStudent()) && a.getCourse().equals(attendance.getCourse())
+                    && a.getAttendanceDate().equals(attendance.getAttendanceDate())) {
+                throw new AttendanceAlreadyExistsException("Attendance already marked");
+            }
+        }
         Attendance newAttendance = attendanceRepository.save(attendance);
         return newAttendance;
     }

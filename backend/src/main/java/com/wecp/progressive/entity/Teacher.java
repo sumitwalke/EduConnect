@@ -44,12 +44,6 @@ public class Teacher implements Comparable<Teacher> {
         this.yearsOfExperience = yearsOfExperience;
     }
 
-    public Teacher(int teacher, String name, int yearsOfExperience){
-        this.teacherId = teacherId;
-        this.fullName = fullName;
-        this.yearsOfExperience = yearsOfExperience;
-    }
-
     public int getTeacherId() {
         return teacherId;
     }

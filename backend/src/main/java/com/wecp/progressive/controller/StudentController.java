@@ -1,5 +1,6 @@
 package com.wecp.progressive.controller;
 
+import com.wecp.progressive.dto.StudentDTO;
 import com.wecp.progressive.entity.Student;
 import com.wecp.progressive.service.impl.StudentServiceImplArraylist;
 import com.wecp.progressive.service.impl.StudentServiceImplJpa;
@@ -7,7 +8,6 @@ import com.wecp.progressive.service.impl.StudentServiceImplJpa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -68,10 +68,11 @@ public class StudentController {
     }
 
     @PutMapping("/{studentId}")
-    public ResponseEntity<Void> updateStudent(@PathVariable int studentId, @RequestBody Student student) {
+    public ResponseEntity<Void> updateStudent(@PathVariable int studentId, @RequestBody StudentDTO studentDTO) {
         try {
-            student.setStudentId(studentId);
-            studentServiceJPA.updateStudent(student);
+            studentDTO.setStudentId(studentId);
+            // studentServiceJPA.updateStudent(student);
+            studentServiceJPA.modifyStudentDetails(studentDTO);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

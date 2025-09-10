@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.wecp.progressive.dto.TeacherDTO;
 import com.wecp.progressive.entity.Teacher;
 import com.wecp.progressive.exception.TeacherAlreadyExistsException;
 import com.wecp.progressive.repository.TeacherRepository;
@@ -69,4 +70,16 @@ public class TeacherServiceImplJpa implements TeacherService {
         return teacherRepository.findById(teacherId).orElse(null);
     }
 
+    @Override
+    public void modifyTeacherDetails(TeacherDTO teacherDTO) { 
+        Teacher updatedTeacher = teacherRepository.findById(teacherDTO.getTeacherId())
+                .orElseThrow(() -> new IllegalArgumentException("Teacher does not exist"));
+                
+        updatedTeacher.setFullName(teacherDTO.getFullName());
+        updatedTeacher.setEmail(teacherDTO.getEmail());
+        updatedTeacher.setContactNumber(teacherDTO.getContactNumber());
+        updatedTeacher.setSubject(teacherDTO.getSubject());
+        updatedTeacher.setYearsOfExperience(teacherDTO.getYearsOfExperience());
+        teacherRepository.save(updatedTeacher);
+    }
 }

@@ -71,7 +71,15 @@ public class StudentServiceImplJpa implements StudentService {
 
     @Override
     public void modifyStudentDetails(StudentDTO studentDTO) {
-
+        Student updatedStudent = studentRepository.findById(studentDTO.getStudentId())
+                .orElseThrow(() -> new IllegalArgumentException("Student does not exist"));
+                
+        updatedStudent.setFullName(studentDTO.getFullName());
+        updatedStudent.setEmail(studentDTO.getEmail());
+        updatedStudent.setContactNumber(studentDTO.getContactNumber());
+        updatedStudent.setDateOfBirth(studentDTO.getDateOfBirth());
+        updatedStudent.setAddress(studentDTO.getAddress());
+        studentRepository.save(updatedStudent);
     }
 
 }

@@ -14,6 +14,8 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.wecp.progressive.service.impl.UserLoginServiceImpl;
+
 import io.jsonwebtoken.io.IOException;
 
 @Component
@@ -23,7 +25,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     private JwtUtil jwtUtil;
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private UserLoginServiceImpl userDetailsService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)

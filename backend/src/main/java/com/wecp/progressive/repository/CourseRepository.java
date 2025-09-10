@@ -3,7 +3,6 @@ package com.wecp.progressive.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.wecp.progressive.entity.Course;
-import java.util.List;
 
 
 public interface CourseRepository extends JpaRepository<Course, Integer>{
