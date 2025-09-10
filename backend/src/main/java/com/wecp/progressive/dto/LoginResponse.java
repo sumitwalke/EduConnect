@@ -21,6 +21,15 @@ public class LoginResponse {
       this.referenceId = referenceId;
    }
 
+   public LoginResponse(@JsonProperty("token") String token, String roles, Integer userId, Integer studentId,
+         Integer teacherId) {
+      this.token = token;
+      this.roles = roles;
+      this.userId = userId;
+      this.studentId = studentId;
+      this.teacherId = teacherId;
+   }
+
    public String getToken() {
       return token;
    }

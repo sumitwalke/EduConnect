@@ -7,6 +7,7 @@ import com.wecp.progressive.service.impl.StudentServiceImplJpa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,7 +40,7 @@ public class StudentController {
     }
 
     @GetMapping("/{studentId}")
-    public ResponseEntity<Student> getStudentById(@PathVariable int studentId) {
+    public ResponseEntity<Student> getStudentById(@PathVariable Integer studentId) {
         try {
             Student student = studentServiceJPA.getStudentById(studentId);
             if (student != null) {

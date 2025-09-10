@@ -20,7 +20,7 @@ public class User {
     private Integer userId;
 
     @Column(name = "username")
-    private String userName;
+    private String username;
 
     @Column(name = "password")
     private String password;
@@ -36,15 +36,15 @@ public class User {
     @JoinColumn(name = "teacher_id", referencedColumnName = "teacher_id")
     private Teacher teacher;
 
-    @Column(name = "refrence_id")
-    private Integer referenceId;
+    // @Column(name = "refrence_id")
+    // private Integer referenceId;
 
     public User() {
     }
 
-    public User(Integer userId, String userName, String password, String role, Student student, Teacher teacher) {
+    public User(Integer userId, String username, String password, String role, Student student, Teacher teacher) {
         this.userId = userId;
-        this.userName = userName;
+        this.username = username;
         this.password = password;
         this.role = role;
         this.student = student;
@@ -59,12 +59,12 @@ public class User {
         this.userId = userId;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
