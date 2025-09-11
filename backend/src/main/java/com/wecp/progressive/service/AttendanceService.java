@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface AttendanceService {
 
-    List<Attendance> getAllAttendance() throws Exception;
+    List<Attendance> getAllAttendance();
 
-    Attendance createAttendance(Attendance attendance) throws Exception;
+    Attendance createAttendance(Attendance attendance);
 
-    void deleteAttendance(int attendanceId) throws Exception;
+    void deleteAttendance(int attendanceId);
 
-    List<Attendance> getAttendanceByStudent(int studentId) throws Exception;
+    List<Attendance> getAttendanceByStudent(int studentId);
 
-    List<Attendance> getAttendanceByCourse(int courseId) throws Exception;
+    List<Attendance> getAttendanceByCourse(int courseId);
 }
