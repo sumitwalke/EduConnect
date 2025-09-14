@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import { Student } from '../../models/Student';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-studentcreate',
+  imports: [CommonModule, FormsModule],
   templateUrl: './studentcreate.component.html',
-  styleUrls: ['./studentcreate.component.scss']
+  styleUrls: ['./studentcreate.component.scss'],
 })
 export class StudentCreateComponent {
   student: Student;
