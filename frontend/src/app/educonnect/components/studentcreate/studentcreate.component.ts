@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-studentcreate',
-  imports: [CommonModule, FormsModule],
   templateUrl: './studentcreate.component.html',
   styleUrls: ['./studentcreate.component.scss'],
 })

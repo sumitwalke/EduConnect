@@ -10,7 +10,9 @@ export class RegistrationComponent implements OnInit {
     successMessage: string | null = null;
     errorMessage: string | null = null;
     selectedRole: string | null = null;
+
     constructor(private formBuilder: FormBuilder) { }
+    
     ngOnInit(): void {
         this.registrationForm = this.formBuilder.group({
             role: ['', Validators.required],
@@ -25,6 +27,7 @@ export class RegistrationComponent implements OnInit {
             address: ['']
         });
     }
+
     onRoleChange(event: Event): void {
         const role = (event.target as HTMLSelectElement).value;
         this.selectedRole = role;
@@ -38,6 +41,7 @@ export class RegistrationComponent implements OnInit {
         this.registrationForm.get('studentClass')?.updateValueAndValidity();
         this.registrationForm.get('teacherSubject')?.updateValueAndValidity();
     }
+
     onSubmit(): void {
         if (this.registrationForm.valid) {
             this.successMessage = 'Registration successful!';
@@ -49,6 +53,7 @@ export class RegistrationComponent implements OnInit {
             this.successMessage = null;
         }
     }
+
     resetForm(): void {
         this.registrationForm.reset();
         this.selectedRole = null;
