@@ -11,6 +11,7 @@ export class TeacherCreateComponent {
     submitted = false;
     successMessage = '';
     errorMessage = '';
+
     constructor(private fb: FormBuilder) {
         this.teacherForm = this.fb.group({
             teacherId: [0],
@@ -21,9 +22,11 @@ export class TeacherCreateComponent {
             yearsOfExperience: [0, [Validators.required, Validators.min(1)]]
         });
     }
+
     get f() {
         return this.teacherForm.controls;
     }
+
     onSubmit(): void {
         this.submitted = true;
         this.successMessage = '';
@@ -38,6 +41,7 @@ export class TeacherCreateComponent {
         this.teacherForm.reset();
         this.submitted = false;
     }
+    
     resetForm(): void {
         this.teacherForm.reset();
         this.submitted = false;
