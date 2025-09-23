@@ -14,7 +14,7 @@ export class Enrollment {
         this.enrollmentDate = enrollmentDate;
     }
 
-    logAttributes(): void {
+    logAttributes?(): void {
         console.log('enrollmentId:', this.enrollmentId);
         console.log('studentId:', this.student);
         console.log('courseId:', this.course);

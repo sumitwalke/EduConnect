@@ -16,7 +16,7 @@ export class Teacher {
       this.yearsOfExperience = yearsOfExperience;
     }
   
-    logAttributes(): void {
+    logAttributes?(): void {
       console.log('teacherId:', this.teacherId);
       console.log('fullName:', this.fullName);
       console.log('subject:', this.subject);

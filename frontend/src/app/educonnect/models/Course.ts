@@ -13,7 +13,7 @@ export class Course {
       this.teacher = teacher;
     }
   
-    logAttributes(): void {
+    logAttributes?(): void {
       console.log('courseId:', this.courseId);
       console.log('courseName:', this.courseName);
       console.log('description:', this.description);
