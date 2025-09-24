@@ -1,46 +1,49 @@
-<div class="enrollment-container">
-    <h2>Enrollment Form</h2>
+<div class="form-container">
+    <h2>Create Enrollments</h2>
     <form [formGroup]="enrollmentForm" (ngSubmit)="onSubmit()">
-        <div>
-            <label for="studentId">Student ID:</label>
-            <input id="studentId" type="number" formControlName="studentId" />
-            <div *ngIf="submitted && enrollmentForm.controls['studentId'].errors">
-                <small *ngIf="enrollmentForm.controls['studentId'].errors['required']">
-                    Student ID is required.
-                </small>
-                <small *ngIf="enrollmentForm.controls['studentId'].errors['pattern']">
-                    Student ID must be numeric.
-                </small>
+        <div class="form-group">
+            <label for="course">Course:</label>
+            <select formControlName="course">
+                <option value="">Select a Course</option>
+                <option *ngFor="let course of courses" [ngValue]="course">
+                    {{ course.courseName }}
+                </option>
+            </select>
+        </div>
+
+        <div *ngIf="role === 'TEACHER'" class="form-group">
+            <label for="student">Student:</label>
+            <select formControlName="student">
+                <option value="">Select a Student</option>
+                <option *ngFor="let student of students" [ngValue]="student">
+                    {{ student.fullName }}
+                </option>
+            </select>
+        </div>
+
+        <div *ngIf="role === 'STUDENT'" class="form-group">
+            <div class="form-group">
+                <label for="student">Student Name:</label>
+                <input type="text" id="student" formControlName="student" [readonly]="true" class="readonly-input" />
             </div>
         </div>
 
-        <div>
-            <label for="courseId">Course ID:</label>
-            <input id="courseId" type="number" formControlName="courseId" />
-            <div *ngIf="submitted && enrollmentForm.controls['courseId'].errors">
-                <small *ngIf="enrollmentForm.controls['courseId'].errors['required']">
-
-                    Course ID is required.
-                </small>
-                <small *ngIf="enrollmentForm.controls['courseId'].errors['pattern']">
-
-                    Course ID must be numeric.
-                </small>
-            </div>
-        </div>
-        
-        <div>
+        <div class="form-group">
             <label for="enrollmentDate">Enrollment Date:</label>
-            <input id="enrollmentDate" type="date" formControlName="enrollmentDate" />
-            <div *ngIf="submitted && enrollmentForm.controls['enrollmentDate'].errors">
-                <small>Enrollment Date is required.</small>
+            <input type="date" id="enrollmentDate" formControlName="enrollmentDate" />
+            <div *ngIf="enrollmentForm.get('enrollmentDate')?.invalid && enrollmentForm.get('enrollmentDate')?.touched"
+                class="error">
+                Enrollment Date is required.
             </div>
         </div>
-        
-        <button type="submit">Add Enrollment</button>
-        <button type="button" (click)="resetForm()">Reset</button>
-    </form>
 
+        <div class="form-actions">
+            <button type="submit" [disabled]="enrollmentForm.invalid">Add Enrollment</button>
+        </div>
+        <div class="form-footer">
+            <a routerLink="/educonnect" class="link">Dashboard</a>
+        </div>
+    </form>
     <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
     <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 </div>

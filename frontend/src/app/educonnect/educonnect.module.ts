@@ -4,26 +4,34 @@ import { CommonModule } from "@angular/common";
 import { EduConnectRoutingModule } from "./educonnect-routing.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
-import { EnrollmentComponent } from "./components/enrollment/enrollment.component";
 import { StudentCreateComponent } from "./components/studentcreate/studentcreate.component";
 import { TeacherCreateComponent } from "./components/teachercreate/teachercreate.component";
 import { CourseCreateComponent } from "./components/coursecreate/coursecreate.component";
+import { RouterModule } from "@angular/router";
+import { EnrollmentComponent } from "./components/enrollment/enrollment.component";
+import { SharedModule } from "../shared/shared.module";
+import { DashboardComponent } from "./components/dashboard/dashboard.component";
+import { StudentEditComponent } from "./components/studentedit/studentedit.component";
 
 @NgModule({
   declarations: [
-    EnrollmentComponent,
     StudentCreateComponent,
     TeacherCreateComponent,
-    CourseCreateComponent
+    CourseCreateComponent,
+    EnrollmentComponent,
+    DashboardComponent,
+    StudentEditComponent
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    RouterModule,
+    EduConnectRoutingModule,
+    SharedModule
   ],
   exports: [
-    
   ]
 })
-export class EduconnectModule {}
+export class EduconnectModule { }
