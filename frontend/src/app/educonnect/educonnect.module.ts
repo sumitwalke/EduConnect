@@ -12,6 +12,8 @@ import { EnrollmentComponent } from "./components/enrollment/enrollment.componen
 import { SharedModule } from "../shared/shared.module";
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { StudentEditComponent } from "./components/studentedit/studentedit.component";
+import { TeacherEditComponent } from "./components/teacheredit/teacheredit.component";
+import { CourseEditComponent } from "./components/courseedit/courseedit.component";
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { StudentEditComponent } from "./components/studentedit/studentedit.compo
     CourseCreateComponent,
     EnrollmentComponent,
     DashboardComponent,
-    StudentEditComponent
+    StudentEditComponent,
+    TeacherEditComponent,
+    CourseEditComponent
   ],
   imports: [
     CommonModule,
@@ -35,3 +39,11 @@ import { StudentEditComponent } from "./components/studentedit/studentedit.compo
   ]
 })
 export class EduconnectModule { }
+
+
+
+
+
+
+
+

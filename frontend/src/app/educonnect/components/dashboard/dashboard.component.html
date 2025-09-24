@@ -8,6 +8,8 @@
     <p><strong>Email:</strong> {{ teacherDetails?.email }}</p>
     <p><strong>Subject:</strong> {{ teacherDetails?.subject }}</p>
     <p><strong>Years of Experience:</strong> {{ teacherDetails?.yearsOfExperience }}</p>
+    <button (click)="navigateToEditTeacher()" class="btn-edit">Edit</button>
+    <button (click)="deleteTeacher()" class="btn-delete">Delete</button>
   </div>
   <div class="course-section">
     <h2>Courses</h2>
@@ -21,6 +23,7 @@
             <th>Course Id</th>
             <th>Course Name</th>
             <th>Description</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -29,6 +32,10 @@
             <td>{{ course.courseId }}</td>
             <td>{{ course.courseName }}</td>
             <td>{{ course.description }}</td>
+            <td>
+              <button (click)="navigateToEditCourse(course.courseId)" class="btn-edit">Edit</button>
+              <button (click)="deleteCourse(course.courseId)" class="btn-delete">Delete</button>
+            </td>
           </tr>
         </tbody>
       </table>

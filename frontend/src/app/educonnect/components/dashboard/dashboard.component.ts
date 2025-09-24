@@ -5,12 +5,12 @@ import { Enrollment } from '../../models/Enrollment';
 import { Student } from '../../models/Student';
 import { EduConnectService } from '../../services/educonnect.service';
 
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-
 export class DashboardComponent implements OnInit {
   teacherDetails: any;
   studentDetails: any;
@@ -125,4 +125,37 @@ export class DashboardComponent implements OnInit {
       })
     }
   }
+
+  navigateToEditTeacher(): void {
+    this.router.navigate(['educonnect/teacher/edit', this.teacherDetails.teacherId]);
+  }
+
+  deleteTeacher(): void {
+    if (confirm('Are you sure you want to delete your teacher profile?')) {
+      this.educonnectService.deleteTeacher(this.teacherId).subscribe({
+        next: () => {
+          this.router.navigate(['/']);
+        },
+        error: (error) => console.error('Error deleting teacher:', error)
+
+      })
+    }
+  }
+
+  navigateToEditCourse(courseId: number): void {
+    this.router.navigate(['educonnect/course/edit', courseId]);
+  }
+
+  deleteCourse(courseId: number): void {
+    if (confirm('Are you sure you want to delete your course profile?')) {
+      this.educonnectService.deleteCourse(courseId).subscribe({
+        next: () => {
+          this.router.navigate(['/']);
+        },
+        error: (error) => console.error('Error deleting course:', error)
+
+      })
+    }
+  }
 }
+
