@@ -98,8 +98,6 @@ export class EnrollmentComponent implements OnInit {
         }
     }
 
-
-
     private handleError(error: HttpErrorResponse): void {
         if (error.error instanceof ErrorEvent) {
             this.errorMessage = ` ${error.error.message}`;

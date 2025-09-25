@@ -49,7 +49,6 @@ export class RegistrationComponent implements OnInit {
             this.registrationForm.get('studentClass')?.clearValidators();
             this.registrationForm.get('studentClass')?.setValue('');
         } else {
-
             this.registrationForm.get('studentClass')?.clearValidators();
             this.registrationForm.get('teacherSubject')?.clearValidators();
             this.registrationForm.get('studentClass')?.setValue('');
@@ -61,31 +60,24 @@ export class RegistrationComponent implements OnInit {
     }
 
     onSubmit(): void {
-        if (this.registrationForm.invalid) {
-            this.registrationError$ = of({
-                message: "Please make sure you have filled all the required fields correctly",
+        if (this.registrationForm.valid) {
+            this.authService.createUser(this.registrationForm.value).subscribe({
+                next: (response) => {
+                    console.log('Registration successful:', response);
+                    this.successMessage = 'Registration successful!';
+                    this.errorMessage = null;
+                    this.resetForm();
+                },
+                error: (error) => {
+                    console.error("Registration error:", error);
+                    this.errorMessage = 'Registration failed. Please try again.';
+                    this.successMessage = null;
+                }
             });
+        } else {
             this.errorMessage = 'Please fill out all fields correctly.';
             this.successMessage = null;
             return;
-        } else {
-            const formValue = this.registrationForm.value;
-            this.registrationError$ = this.authService
-                .createUser(formValue)
-                .pipe(
-                    tap((response) => {
-                        console.log('Registration successful:', response);
-                        this.successMessage = 'Registration successful!';
-                        this.errorMessage = null;
-                        this.resetForm();
-                    }),
-                    catchError((error) => {
-                        console.error("Registration error:", error);
-                        this.errorMessage = 'Registration failed. Please try again.';
-                        this.successMessage = null;
-                        return of({ message: "Registration failed: " + error });
-                    })
-                );
         }
     }
 

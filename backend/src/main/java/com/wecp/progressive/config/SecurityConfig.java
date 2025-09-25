@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -24,6 +25,9 @@ public class SecurityConfig {
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
 
+    @Autowired
+    UserDetailsService userDetailsService;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -31,37 +35,49 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                
                         //Authentication 
                         .antMatchers("/auth/**").permitAll()
                         
                         // Attendance 
-                        .antMatchers("/attendance/**").hasAuthority("TEACHER")
-                        .antMatchers(HttpMethod.GET, "/attendance/**").hasAuthority("STUDENT")
+                        .antMatchers(HttpMethod.GET,"/attendance/**").hasAnyAuthority("TEACHER", "STUDENT")
+                        .antMatchers(HttpMethod.POST,"/attendance/**").hasAuthority("TEACHER")
+                        .antMatchers(HttpMethod.PUT,"/attendance/**").hasAuthority("TEACHER")
+                        .antMatchers(HttpMethod.DELETE,"/attendance/**").hasAuthority("TEACHER")
 
                         // Course
-                        .antMatchers("/course/**").hasAuthority("TEACHER")
-                        .antMatchers(HttpMethod.GET, "/course/**").hasAuthority("STUDENT")
+                        .antMatchers(HttpMethod.GET,"/course/**").hasAnyAuthority("TEACHER", "STUDENT")
+                        .antMatchers(HttpMethod.POST,"/course/**").hasAuthority("TEACHER")
+                        .antMatchers(HttpMethod.PUT,"/course/**").hasAuthority("TEACHER")
+                        .antMatchers(HttpMethod.DELETE,"/course/**").hasAuthority("TEACHER")
 
                         // Enrollment
-                        .antMatchers("/enrollment/**").hasAuthority("TEACHER")
-                        .antMatchers(HttpMethod.GET, "/enrollment/**").hasAuthority("STUDENT")
+                        .antMatchers(HttpMethod.GET,"/enrollment/**").hasAnyAuthority("TEACHER", "STUDENT")
+                        .antMatchers(HttpMethod.POST, "/enrollment/**").hasAuthority("STUDENT")
+                        .antMatchers(HttpMethod.PUT, "/enrollment/**").hasAuthority("STUDENT")
+                        .antMatchers(HttpMethod.DELETE, "/enrollment/**").hasAuthority("STUDENT")
 
                         // Student
-                        .antMatchers("/student/**").hasAuthority("STUDENT")
+                        .antMatchers(HttpMethod.GET,"/student/**").hasAuthority("STUDENT")
+                        .antMatchers(HttpMethod.POST,"/student/**").hasAuthority("STUDENT")
+                        .antMatchers(HttpMethod.PUT,"/student/**").hasAuthority("STUDENT")
+                        .antMatchers(HttpMethod.DELETE,"/student/**").hasAuthority("STUDENT")
 
                         // Teacher
-                        .antMatchers("/teacher/**").hasAuthority("TEACHER")
+                        .antMatchers(HttpMethod.GET,"/teacher/**").hasAuthority("TEACHER")
+                        .antMatchers(HttpMethod.POST,"/teacher/**").hasAuthority("TEACHER")
+                        .antMatchers(HttpMethod.PUT,"/teacher/**").hasAuthority("TEACHER")
+                        .antMatchers(HttpMethod.DELETE,"/teacher/**").hasAuthority("TEACHER")
                         .anyRequest().authenticated()
                     );
 
-        http.addFilterBefore(jwtRequestFilter,
-                UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+    AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
     }
 }

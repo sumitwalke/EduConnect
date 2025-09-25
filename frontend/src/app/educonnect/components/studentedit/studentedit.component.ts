@@ -96,6 +96,9 @@ export class StudentEditComponent implements OnInit {
                     this.handleError(error);
                 }
             });
+        } else {
+            this.errorMessage = 'Please fill out all required fileds correctly';
+            this.successMessage = null;
         }
     }
 

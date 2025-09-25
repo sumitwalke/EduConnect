@@ -92,6 +92,9 @@ export class TeacherEditComponent implements OnInit {
                     this.successMessage = 'Teacher updated successfully!';
                 }
             });
+        } else {
+            this.errorMessage = 'Please fill out all required fileds correctly';
+            this.successMessage = null;
         }
     }
 
