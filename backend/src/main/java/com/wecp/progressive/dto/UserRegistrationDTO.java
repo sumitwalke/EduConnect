@@ -5,7 +5,7 @@ import java.util.Date;
 public class UserRegistrationDTO {
     private String username;
     private String password;
-    private String role;
+    private String role; 
     private String fullName;
     private String contactNumber;
     private String email;
@@ -93,5 +93,4 @@ public class UserRegistrationDTO {
     public void setYearsOfExperience(Integer yearsOfExperience) {
         this.yearsOfExperience = yearsOfExperience;
     }
-
 }

@@ -1,14 +1,15 @@
 package com.wecp.progressive.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.wecp.progressive.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+@Repository
+public interface UserRepository extends JpaRepository<User, Integer> {
 
-public interface UserRepository extends JpaRepository<User, Integer>{
-    User findByUsername(String userName);
-    // User findByTeacherId(int teacherId);
-    // User findByStudentId(int studentId);
-    // void deleteByTeacherId(int teacherId);
-    // void deleteByStudentId(int studentId);
+    User findByUsername(String username);
 }

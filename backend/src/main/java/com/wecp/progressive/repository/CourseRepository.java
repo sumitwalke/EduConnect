@@ -1,13 +1,27 @@
 package com.wecp.progressive.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.wecp.progressive.entity.Course;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 
-public interface CourseRepository extends JpaRepository<Course, Integer>{
-    // public Course findByCourseId(Integer courseId);
-    // public Course findByCourseName(String courseName);
-    // public List<Course> findAllByTeacherId(Integer teacherId);
-    // public void deleteByTeacherId(Integer teacherId);
+@Repository
+public interface CourseRepository extends JpaRepository<Course, Integer> {
+
+    Course findByCourseId(int clinicId);
+
+    @Query("Select c FROM Course c WHERE c.teacher.teacherId = :teacherId")
+    List<Course> findAllByTeacherId(int teacherId);
+
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM Course c WHERE c.teacher.teacherId = :teacherId")
+    void deleteByTeacherId(int teacherId);
+
+    @Query("Select c FROM Course c WHERE c.courseName = :courseName")
+    Course findByCourseName(String courseName);
 }

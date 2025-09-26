@@ -1,48 +1,38 @@
 package com.wecp.progressive.entity;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "user")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Integer userId;
+    private int userId;
 
-    @Column(name = "username")
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "role")
+    @Column(name = "role", nullable = false)
     private String role;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "student_id", referencedColumnName = "student_id")
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "student_id")
     private Student student;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "teacher_id", referencedColumnName = "teacher_id")
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
-    // @Column(name = "refrence_id")
-    // private Integer referenceId;
-
+    // Constructors
     public User() {
     }
 
-    public User(Integer userId, String username, String password, String role, Student student, Teacher teacher) {
+    public User(int userId, String username, String password, String role, Student student, Teacher teacher) {
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -51,11 +41,12 @@ public class User {
         this.teacher = teacher;
     }
 
-    public Integer getUserId() {
+    // Getters and Setters
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
@@ -98,5 +89,4 @@ public class User {
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
     }
-
 }

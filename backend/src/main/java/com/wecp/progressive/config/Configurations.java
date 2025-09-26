@@ -9,6 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class Configurations {
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -23,7 +24,6 @@ public class Configurations {
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .allowedOrigins("*")
                         .allowedHeaders("*");
-                        // .allowCredentials(true);
             }
         };
     }

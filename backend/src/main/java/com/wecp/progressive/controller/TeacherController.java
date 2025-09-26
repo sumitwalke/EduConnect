@@ -3,18 +3,10 @@ package com.wecp.progressive.controller;
 import com.wecp.progressive.dto.TeacherDTO;
 import com.wecp.progressive.entity.Teacher;
 import com.wecp.progressive.service.impl.TeacherServiceImplJpa;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,62 +15,57 @@ import java.util.List;
 public class TeacherController {
 
     @Autowired
-    TeacherServiceImplJpa teacherService;
+    TeacherServiceImplJpa teacherServiceImplJpa;
 
     @GetMapping
     public ResponseEntity<List<Teacher>> getAllTeachers() {
         try {
-            List<Teacher> teachers = teacherService.getAllTeachers();
-            return new ResponseEntity<>(teachers, HttpStatus.OK);
+            List<Teacher> teacherList = teacherServiceImplJpa.getAllTeachers();
+            return new ResponseEntity<>(teacherList, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping("/teacherId")
+    @GetMapping("/{teacherId}")
     public ResponseEntity<Teacher> getTeacherById(@PathVariable int teacherId) {
         try {
-            Teacher teacher = teacherService.getTeacherById(teacherId);
-            if(teacher!=null){
-                return new ResponseEntity<>(teacher, HttpStatus.OK);
-            }
-            return new ResponseEntity<>(teacher, HttpStatus.NOT_FOUND);
+            Teacher teacher = teacherServiceImplJpa.getTeacherById(teacherId);
+            return new ResponseEntity<>(teacher, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PostMapping
-    public ResponseEntity<Integer> addTeacher(@RequestBody Teacher teacher) {
+    public ResponseEntity<?> addTeacher(@RequestBody Teacher teacher) {
         try {
-            Integer teacherId = teacherService.addTeacher(teacher);
-            if(teacherId != null){
-                return new ResponseEntity<>(teacherId, HttpStatus.CREATED);
-            }
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);     
+            int teacherId = teacherServiceImplJpa.addTeacher(teacher);
+            return new ResponseEntity<>(teacherId, HttpStatus.CREATED);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("An error occurred", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PutMapping("/{teacherId}")
-    public ResponseEntity<Void> updateTeacher(@PathVariable int teacherId, @RequestBody TeacherDTO teacherDTO) {
+    public ResponseEntity<?> updateTeacher(@PathVariable int teacherId, @RequestBody TeacherDTO teacher) {
         try {
-            teacherDTO.setTeacherId(teacherId);
-            // teacherService.updateTeacher(teacher);
-            teacherService.modifyTeacherDetails(teacherDTO);
+            teacher.setTeacherId(teacherId);
+            teacherServiceImplJpa.modifyTeacherDetails(teacher);
             return new ResponseEntity<>(HttpStatus.OK);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("An error occurred", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @DeleteMapping("/{teacherId}")
     public ResponseEntity<Void> deleteTeacher(@PathVariable int teacherId) {
         try {
-            teacherService.deleteTeacher(teacherId);
+            teacherServiceImplJpa.deleteTeacher(teacherId);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -88,8 +75,8 @@ public class TeacherController {
     @GetMapping("/yearsofexperience")
     public ResponseEntity<List<Teacher>> getTeacherSortedByYearsOfExperience() {
         try {
-            List<Teacher> teachers = teacherService.getTeacherSortedByExperience();
-            return new ResponseEntity<>(teachers, HttpStatus.OK);
+            List<Teacher> teacherList = teacherServiceImplJpa.getTeacherSortedByExperience();
+            return new ResponseEntity<>(teacherList, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
